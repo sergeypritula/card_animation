@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Master View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController storyboardIdentifier="MasterViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="MasterViewController" customModule="CardAnimation" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m7B-tS-wkW">
+                                <rect key="frame" x="72.5" y="669" width="269" height="143"/>
+                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="m7B-tS-wkW" secondAttribute="height" multiplier="15:8" constant="1" id="egF-ZW-fwi"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="m7B-tS-wkW" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.65" id="B9M-Xi-Ja4"/>
+                            <constraint firstItem="m7B-tS-wkW" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="EZP-dh-RPM"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="m7B-tS-wkW" secondAttribute="bottom" constant="50" id="wSq-8T-G0F"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="cardView" destination="m7B-tS-wkW" id="y9P-CJ-6Gz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="25" y="117"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="D4C-Dn-Jnn">
+            <objects>
+                <viewController storyboardIdentifier="DetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DKm-ha-a8H" customClass="DetailViewController" customModule="CardAnimation" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YsP-aW-VM3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C61-Yd-Bph">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqr-G7-NgD">
+                                <rect key="frame" x="346" y="64" width="48" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="ZzQ-8b-lxi"/>
+                                    <constraint firstAttribute="width" constant="48" id="f9S-yk-bnp"/>
+                                </constraints>
+                                <state key="normal" image="card_close"/>
+                                <connections>
+                                    <action selector="closeButtonAction:" destination="DKm-ha-a8H" eventType="touchUpInside" id="onF-Io-JRG"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z0R-m7-Zw5">
+                                <rect key="frame" x="31" y="347.5" width="352" height="211"/>
+                                <color key="backgroundColor" systemColor="systemPurpleColor" red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="z0R-m7-Zw5" secondAttribute="height" multiplier="5:3" id="Zjc-NO-gCC"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="z0R-m7-Zw5" firstAttribute="width" secondItem="YsP-aW-VM3" secondAttribute="width" multiplier="0.85" id="CLB-Mw-Ai3"/>
+                            <constraint firstItem="C61-Yd-Bph" firstAttribute="top" secondItem="YsP-aW-VM3" secondAttribute="top" id="L3v-aW-KF0"/>
+                            <constraint firstItem="CGJ-8H-jQz" firstAttribute="trailing" secondItem="C61-Yd-Bph" secondAttribute="trailing" id="XjH-ux-kuG"/>
+                            <constraint firstAttribute="bottom" secondItem="C61-Yd-Bph" secondAttribute="bottom" id="YjN-d9-alt"/>
+                            <constraint firstItem="CGJ-8H-jQz" firstAttribute="trailing" secondItem="hqr-G7-NgD" secondAttribute="trailing" constant="20" id="hXg-jF-1qi"/>
+                            <constraint firstItem="z0R-m7-Zw5" firstAttribute="centerY" secondItem="CGJ-8H-jQz" secondAttribute="centerY" id="k2u-KM-6p4"/>
+                            <constraint firstItem="C61-Yd-Bph" firstAttribute="leading" secondItem="CGJ-8H-jQz" secondAttribute="leading" id="rYo-lh-doV"/>
+                            <constraint firstItem="hqr-G7-NgD" firstAttribute="top" secondItem="CGJ-8H-jQz" secondAttribute="top" constant="20" id="vOw-8N-Mt9"/>
+                            <constraint firstItem="z0R-m7-Zw5" firstAttribute="centerX" secondItem="CGJ-8H-jQz" secondAttribute="centerX" id="zwU-DU-HLp"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="CGJ-8H-jQz"/>
+                    </view>
+                    <connections>
+                        <outlet property="backgroundView" destination="C61-Yd-Bph" id="tZ0-OS-X8R"/>
+                        <outlet property="cardView" destination="z0R-m7-Zw5" id="hjp-fj-Les"/>
+                        <outlet property="closeButton" destination="hqr-G7-NgD" id="6TI-31-48x"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="faR-p7-w5b" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="844" y="117"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="card_close" width="38" height="38"/>
+    </resources>
+</document>
