@@ -11,7 +11,6 @@
 		5163A2AD24AB509700BD944E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A2AC24AB509700BD944E /* SceneDelegate.swift */; };
 		5163A2B224AB509700BD944E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5163A2B024AB509700BD944E /* Main.storyboard */; };
 		5163A2B524AB509700BD944E /* CardAnimation.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5163A2B324AB509700BD944E /* CardAnimation.xcdatamodeld */; };
-		5163A2B724AB509900BD944E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5163A2B624AB509900BD944E /* Assets.xcassets */; };
 		5163A2BA24AB509900BD944E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5163A2B824AB509900BD944E /* LaunchScreen.storyboard */; };
 		5163A2C524AB509900BD944E /* CardAnimationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A2C424AB509900BD944E /* CardAnimationTests.swift */; };
 		5163A2D024AB509900BD944E /* CardAnimationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A2CF24AB509900BD944E /* CardAnimationUITests.swift */; };
@@ -23,6 +22,7 @@
 		5163A2F124AB51C200BD944E /* Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A2F024AB51C200BD944E /* Storyboard.swift */; };
 		5163A2F424AB549700BD944E /* Optional+do.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A2F324AB549700BD944E /* Optional+do.swift */; };
 		5163A2F624AB54BB00BD944E /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A2F524AB54BB00BD944E /* AnimationHelper.swift */; };
+		51AC24C524AD310B00B526AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5163A2B624AB509900BD944E /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -312,8 +312,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51AC24C524AD310B00B526AC /* Assets.xcassets in Resources */,
 				5163A2BA24AB509900BD944E /* LaunchScreen.storyboard in Resources */,
-				5163A2B724AB509900BD944E /* Assets.xcassets in Resources */,
 				5163A2B224AB509700BD944E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -522,6 +522,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GJX986XEH7;
 				INFOPLIST_FILE = CardAnimation/SupportFiles/Info.plist;
@@ -531,6 +532,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.onix.CardAnimation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -540,6 +542,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GJX986XEH7;
 				INFOPLIST_FILE = CardAnimation/SupportFiles/Info.plist;
@@ -549,6 +552,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.onix.CardAnimation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

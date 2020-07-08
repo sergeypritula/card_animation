@@ -11,9 +11,9 @@ import UIKit
 class CardDismissAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     private var duration: TimeInterval
 
-    private var cardImage: UIView?
+    private var cardImage: UIView
 
-    init(duration: TimeInterval, cardImage: UIView?) {
+    init(duration: TimeInterval, cardImage: UIView) {
         self.duration = duration
         self.cardImage = cardImage
     }
@@ -24,19 +24,18 @@ class CardDismissAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView
+        cardImage.isHidden = false
         
         guard
             let toVC = transitionContext.viewController(forKey: .to) as? MasterViewController,
             let fromVC = transitionContext.viewController(forKey: .from) as? DetailViewController,
             let cardViewSnapshot = fromVC.cardView.snapshotView(afterScreenUpdates: true),
-            let closeButtonSnapshot = fromVC.closeButton.snapshotView(afterScreenUpdates: true)
+            let closeButtonSnapshot = fromVC.closeButton.snapshotView(afterScreenUpdates: true),
+            let cardImageViewSnapshot = cardImage.snapshotView(afterScreenUpdates: true)
             else {
                 transitionContext.completeTransition(true)
                 return
         }
-
-        cardImage?.isHidden = false
-        var cardImageViewSnapshot = cardImage?.snapshotView(afterScreenUpdates: true)
 
         let cardBackgroundSnapshot = UIView()
         cardBackgroundSnapshot.frame = fromVC.view.frame
@@ -49,36 +48,27 @@ class CardDismissAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         backgroundView = UIView(frame: containerView.bounds)
         backgroundView.addSubview(fadeView)
         fadeView.alpha = 1.0
-
+        
         let cardRect = fromVC.cardView.convert(fromVC.cardView.bounds, to: nil)
         let closeButtonRect = fromVC.closeButton.convert(fromVC.closeButton.bounds, to: nil)
-
-        if let _ = cardImage {
-            cardImageViewSnapshot?.frame = cardRect
-            cardViewSnapshot.frame = cardRect
-
-            cardImageViewSnapshot.do { cardBackgroundSnapshot.addSubview($0) }
-            cardBackgroundSnapshot.addSubview(cardViewSnapshot)
-        } else {
-            cardImageViewSnapshot?.frame = cardRect
-            cardImageViewSnapshot?.contentMode = .scaleToFill
-
-            cardImageViewSnapshot.do { cardBackgroundSnapshot.addSubview($0) }
-            cardBackgroundSnapshot.addSubview(cardViewSnapshot)
-
-            cardViewSnapshot.frame = cardRect
-        }
-
+        let cardToFrame = cardImage.convert(cardImage.bounds, to: nil)
+        
+        cardImageViewSnapshot.frame = cardRect
+        cardViewSnapshot.frame = cardRect
+        
+        cardBackgroundSnapshot.addSubview(cardImageViewSnapshot)
+        cardBackgroundSnapshot.addSubview(cardViewSnapshot)
+        
         cardBackgroundSnapshot.addSubview(closeButtonSnapshot)
-
+        
         [backgroundView, cardBackgroundSnapshot].forEach { containerView.addSubview($0) }
         containerView.sendSubviewToBack(backgroundView)
-
-        cardImageViewSnapshot?.alpha = 0
+        
+        cardImageViewSnapshot.alpha = 0
         cardViewSnapshot.alpha = 1
-
-        cardImageViewSnapshot?.layer.transform = AnimationHelper.yRotation(.pi / 2)
-
+        
+        cardImageViewSnapshot.layer.transform = AnimationHelper.yRotation(.pi / 2)
+        
         closeButtonSnapshot.frame = closeButtonRect
         closeButtonSnapshot.alpha = 1
 
@@ -93,13 +83,11 @@ class CardDismissAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             options: .calculationModeLinear,
             animations: {
                 UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1) {
-                    if let cardImage = self.cardImage {
-                        cardImageViewSnapshot?.frame = cardImage.convert(cardImage.bounds, to: nil)
-                        cardViewSnapshot.frame = cardImage.convert(cardImage.bounds, to: nil)
-
-                        fadeView.alpha = 0.0
-                        closeButtonSnapshot.alpha = 0.0
-                    }
+                    cardImageViewSnapshot.frame = cardToFrame
+                    cardViewSnapshot.frame = cardToFrame
+                        
+                    fadeView.alpha = 0.0
+                    closeButtonSnapshot.alpha = 0.0
                 }
 
                 UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1 / 2) {
@@ -108,11 +96,11 @@ class CardDismissAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
                 UIView.addKeyframe(withRelativeStartTime: 1 / 2, relativeDuration: 0) {
                     cardViewSnapshot.alpha = 0
-                    cardImageViewSnapshot?.alpha = 1
+                    cardImageViewSnapshot.alpha = 1
                 }
 
                 UIView.addKeyframe(withRelativeStartTime: 1 / 2, relativeDuration: 1 / 2) {
-                    cardImageViewSnapshot?.layer.transform = AnimationHelper.yRotation(0.0)
+                    cardImageViewSnapshot.layer.transform = AnimationHelper.yRotation(0.0)
                 }
             },
             completion: { _ in

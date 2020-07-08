@@ -10,9 +10,9 @@ import UIKit
 
 class CardPresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     private var duration: TimeInterval
-    private var cardImage: UIView?
+    private var cardImage: UIView
 
-    init(duration: TimeInterval, cardImage: UIView?) {
+    init(duration: TimeInterval, cardImage: UIView) {
         self.duration = duration
         self.cardImage = cardImage
     }
@@ -25,27 +25,31 @@ class CardPresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let containerView = transitionContext.containerView
 
         guard
-            let fromVC = transitionContext.viewController(forKey: .from) as? MasterViewController,
             let toVC = transitionContext.viewController(forKey: .to) as? DetailViewController
             else {
                 transitionContext.completeTransition(true)
                 return
         }
         
+        // Check this, why we need layout subviews here?
+        toVC.view.layoutSubviews()
         containerView.addSubview(toVC.view)
         
         guard
             let cardViewSnapshot = toVC.cardView.snapshotView(afterScreenUpdates: true),
-            let closeButtonSnapshot = toVC.closeButton.snapshotView(afterScreenUpdates: true) else  {
+            let closeButtonSnapshot = toVC.closeButton.snapshotView(afterScreenUpdates: true),
+            let cardImageViewSnapshot = cardImage.snapshotView(afterScreenUpdates: true)
+            else  {
                 transitionContext.completeTransition(true)
                 return
         }
+        
+        print("\(#function) frame: \(toVC.cardView.frame)")
         
         let cardBackgroundSnapshot = UIView()
         cardBackgroundSnapshot.frame = toVC.view.frame
         cardBackgroundSnapshot.backgroundColor = .clear
 
-        var cardImageViewSnapshot = cardImage?.snapshotView(afterScreenUpdates: true)
 
         let backgroundView: UIView
         let fadeView = UIView(frame: containerView.bounds)
@@ -53,35 +57,27 @@ class CardPresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
         backgroundView = UIView(frame: containerView.bounds)
         backgroundView.addSubview(fadeView)
+        
         fadeView.alpha = 0
-
         toVC.view.alpha = 0
 
         let cardRect = toVC.cardView.convert(toVC.cardView.bounds, to: nil)
         let closeButtonRect = toVC.closeButton.convert(toVC.closeButton.bounds, to: nil)
-
-        if let cardImage = cardImage {
-            cardImageViewSnapshot?.frame = cardImage.convert(cardImage.bounds, to: nil)
-            cardViewSnapshot.frame = cardImage.convert(cardImage.bounds, to: nil)
-
-            cardImageViewSnapshot.do { cardBackgroundSnapshot.addSubview($0) }
-            cardBackgroundSnapshot.addSubview(cardViewSnapshot)
-        } else {
-            cardImageViewSnapshot?.frame = cardRect
-            cardImageViewSnapshot?.contentMode = .scaleToFill
-
-            cardImageViewSnapshot.do { cardBackgroundSnapshot.addSubview($0) }
-            cardBackgroundSnapshot.addSubview(cardViewSnapshot)
-
-            cardViewSnapshot.frame = cardRect
-        }
-
+        
+        print("cardRect: \(cardRect)")
+        
+        cardImageViewSnapshot.frame = cardImage.convert(cardImage.bounds, to: nil)
+        cardViewSnapshot.frame = cardImage.convert(cardImage.bounds, to: nil)
+        
+        cardBackgroundSnapshot.addSubview(cardImageViewSnapshot)
+        cardBackgroundSnapshot.addSubview(cardViewSnapshot)
+        
         cardBackgroundSnapshot.addSubview(closeButtonSnapshot)
 
         [backgroundView, cardBackgroundSnapshot].forEach { containerView.addSubview($0) }
         containerView.sendSubviewToBack(backgroundView)
 
-        cardImageViewSnapshot?.alpha = 1
+        cardImageViewSnapshot.alpha = 1
         cardViewSnapshot.alpha = 0
 
         cardViewSnapshot.layer.transform = AnimationHelper.yRotation(-.pi / 2)
@@ -89,7 +85,7 @@ class CardPresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         closeButtonSnapshot.frame = closeButtonRect
         closeButtonSnapshot.alpha = 0
 
-        cardImage?.isHidden = true
+        cardImage.isHidden = true
 
         UIView.animateKeyframes(
             withDuration: duration,
@@ -102,20 +98,17 @@ class CardPresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
                 }
 
                 UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1 / 2) {
-                    cardImageViewSnapshot?.layer.transform = AnimationHelper.yRotation(-.pi / 2)
+                    cardImageViewSnapshot.layer.transform = AnimationHelper.yRotation(-.pi / 2)
+                    
+                    cardViewSnapshot.alpha = 1.0
                 }
 
                 UIView.addKeyframe(withRelativeStartTime: 1 / 2, relativeDuration: 1 / 2) {
                     cardViewSnapshot.layer.transform = AnimationHelper.yRotation(0.0)
                 }
 
-                UIView.addKeyframe(withRelativeStartTime: 1 / 2, relativeDuration: 0) {
-                    cardViewSnapshot.alpha = 1
-                    cardImageViewSnapshot?.alpha = 0
-                }
-
                 UIView.addKeyframe(withRelativeStartTime: 1 / 5, relativeDuration: 4 / 5) {
-                    cardImageViewSnapshot?.frame = cardRect
+                    cardImageViewSnapshot.frame = cardRect
                     cardViewSnapshot.frame = cardRect
                 }
 

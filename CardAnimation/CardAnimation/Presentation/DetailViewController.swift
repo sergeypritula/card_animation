@@ -17,6 +17,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        print("\(#function) frame: \(cardView.frame)")
     }
 
     @IBAction func closeButtonAction(_ sender: Any) {
